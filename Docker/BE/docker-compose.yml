@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  backend:
+    build: .
+    container_name: qc-backend
+    restart: always
+    ports:
+      - "${PORT_BE}:${PORT_BE}"
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - JWT_SECRET=${JWT_SECRET}
+      - CORS_FE=${CORS_FE}
+      - PORT_BE=${PORT_BE}
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - qc-network  # Gunakan jaringan yang sama dengan frontend
+
+networks:
+  qc-network:
+    external: true  # Jika jaringan sudah dibuat sebelumnya
